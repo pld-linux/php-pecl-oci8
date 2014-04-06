@@ -1,0 +1,25 @@
+--- php-5.3.3/config.m4.orig	2010-06-25 23:18:09.000000000 +0200
++++ php-5.3.3/config.m4	2010-09-10 19:37:23.484315002 +0200
+@@ -304,6 +304,9 @@
+ 
+     AC_MSG_CHECKING([Oracle Instant Client SDK header directory])
+ 
++    dnl Header directory for Instant Client SDK PLD RPM install
++    OCISDKPLDINC=$PHP_OCI8_INSTANT_CLIENT/../include/oracle/client
++
+     dnl Header directory for Instant Client SDK RPM install
+     OCISDKRPMINC=`echo "$PHP_OCI8_INSTANT_CLIENT" | $PHP_OCI8_SED -e 's!^/usr/lib/oracle/\(.*\)/client\('${PHP_OCI8_IC_LIBDIR_SUFFIX}'\)*/lib[/]*$!/usr/include/oracle/\1/client\2!'`
+ 
+@@ -313,7 +316,11 @@
+     dnl Header directory for manual installation
+     OCISDKMANINC=`echo "$PHP_OCI8_INSTANT_CLIENT" | $PHP_OCI8_SED -e 's!\(.*\)/lib[/]*$!\1/include!'`
+ 
+-    if test -f "$OCISDKRPMINC/oci.h"; then
++    if test -f "$OCISDKPLDINC/oci.h"; then
++      AC_MSG_RESULT($OCISDKPLDINC)
++      PHP_ADD_INCLUDE($OCISDKPLDINC)
++      OCI8INCDIR=$OCISDKPLDINC
++    elif test -f "$OCISDKRPMINC/oci.h"; then
+       AC_MSG_RESULT($OCISDKRPMINC)
+       PHP_ADD_INCLUDE($OCISDKRPMINC)
+       OCI8INCDIR=$OCISDKRPMINC
