@@ -33,7 +33,7 @@ with Oracle client libraries from Oracle Database 10.2, 11, or 12.1.
 %prep
 %setup -qc
 mv %{modname}-%{version}/* .
-%patch0 -p1
+%patch -P0 -p1
 
 cat <<'EOF' > run-tests.sh
 #!/bin/sh
